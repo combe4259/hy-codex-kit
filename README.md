@@ -2,6 +2,46 @@
 
 Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저장소에서 직접 받는다.
 
+## 한눈에 보기
+
+### 단계별 흐름
+| 단계 | 호출 | 용도 |
+|---|---|---|
+| 실무자 대화 전 | `docs/playbook/interview.md 절차대로 해` | 질문 목록 정리, 대화 후 PLAN 반영 |
+| 개념 조사 | `docs/playbook/research.md 절차대로 ○○ 조사해` | 도메인 개념 → GLOSSARY |
+| 계획 | `/plan` | 구현 전 계획 수립 |
+| 기능 완료마다 | `docs/playbook/checkpoint.md 절차대로 해` | 테스트 → 문서 갱신 → 커밋 → 3줄 보고 |
+| 리뷰 | `/review` | 현재 변경의 버그 리뷰 |
+| 제출 전 | `docs/playbook/wrapup.md 절차대로 해` | 최종 점검 + 서술형 대비 요약 |
+
+### Skills
+| 이름 | 호출 | 용도 |
+|---|---|---|
+| to-questionnaire | `$to-questionnaire` | 실무자에게 물을 질문을 순서대로 정리 |
+| grill-me | `$grill-me` | 계획·설계의 빈틈을 집요하게 질문 (grilling 필요) |
+| domain-modeling | `$domain-modeling` | 확정된 용어를 GLOSSARY로 축적 |
+| define-goal | `$define-goal` | 모호한 요청 → 측정 가능한 목표·검증 방법 |
+| jupyter-notebook | `$jupyter-notebook` | CSV 탐색 분석용 노트북 생성 |
+| handoff | `$handoff 다음 세션 용도` | 컨텍스트 가득 찼을 때 인수인계 문서 |
+| superpowers | `$brainstorming` `$test-driven-development` 등 | 개발 방법론 묶음. 매 요청 SKILL.md 재로딩으로 토큰 낭비 → 비추천 |
+
+### MCP (MCP 탭에서만 등록)
+| 이름 | 호출 | 용도 |
+|---|---|---|
+| fetch | `fetch로 <URL> 읽고 요약해줘` | 웹페이지 하나를 마크다운으로 읽기 (도구 1개, 가벼움) |
+| Context7 | `use context7 로 <라이브러리> 예시 찾아줘` | 라이브러리 최신 공식 문서·예시 |
+| arXiv (선택) | `arxiv에서 <주제> 논문 찾아줘` | 논문 검색 (도구 19개, 무거움) |
+
+### Codex 내장
+| 명령 | 용도 |
+|---|---|
+| `/status` | 모델·권한·토큰 사용량 확인 |
+| `/mcp` | 연결된 MCP 목록 확인 |
+| `/skills` | 설치된 스킬 확인 |
+| `/compact` | 대화가 길어졌을 때 컨텍스트 압축 |
+| `/diff` | 현재 변경 확인 |
+| 웹 검색 | `○○ 검색해서 알려줘` (꺼져 있으면 `codex --search`) |
+
 
 ## 하네스 (이 레포, `templates/`)
 
