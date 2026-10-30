@@ -123,3 +123,81 @@ for s in grill-me grilling handoff; do ln -s ~/.codex/mattpocock-skills/skills/p
 ```
 
 사용: `$grill-me` / `$handoff 다음 세션은 테스트 작성용`
+
+## to-questionnaire / domain-modeling (Matt Pocock skills)
+
+- 저장소: https://github.com/mattpocock/skills (공개, MIT, Codex용 `agents/openai.yaml` 포함)
+- `to-questionnaire`: 내가 모르는 것을 실무자에게 물어볼 질문 목록으로 순서대로 정리. 메신저 대화 전에 사용.
+- `domain-modeling`: 대화하며 확정된 용어를 `GLOSSARY.md`로 축적. 낯선 도메인(반도체) 용어 정리 + 후속 서술형 대비.
+- 기준 커밋: `a496f5513d4a4cf889bc48e189e579f4b0bdf6aa` (grill-me와 같은 clone 재사용)
+
+설치:
+
+```bash
+[ -d ~/.codex/mattpocock-skills ] || git clone https://github.com/mattpocock/skills.git ~/.codex/mattpocock-skills
+git -C ~/.codex/mattpocock-skills checkout a496f5513d4a4cf889bc48e189e579f4b0bdf6aa
+mkdir -p ~/.agents/skills
+ln -s ~/.codex/mattpocock-skills/skills/productivity/to-questionnaire ~/.agents/skills/to-questionnaire
+ln -s ~/.codex/mattpocock-skills/skills/engineering/domain-modeling ~/.agents/skills/domain-modeling
+```
+
+## Codex 내장 웹 검색 (설치 없음)
+
+- 출처: https://github.com/openai/codex (Apache-2.0), `WebSearchMode = disabled | cached(기본) | live`
+- 반도체 개념 딥리서치 1순위. MCP 도구 정의가 안 붙어서 토큰 부담 없음.
+- 켜기: `codex --search` 또는 `~/.codex/config.toml` 최상단에 `web_search = "live"`
+- 소스로만 확인. 응시 환경 관리자 설정으로 막혀 있을 수 있음 → 사전 체험 때 `/status` 확인 후 검색 한 번 시켜보기.
+
+## fetch MCP
+
+- 저장소: https://github.com/modelcontextprotocol/servers (공개, MIT) `src/fetch`
+- URL 하나를 마크다운으로 읽어오는 도구 1개짜리 MCP. 위키피디아·공식 문서 읽기용, 웹 검색 막혔을 때 대안.
+- 기준 커밋: `194cc86e3ae6400958555bd4116849d822d69263` / PyPI `mcp-server-fetch==2026.10.28` (로컬 테스트 완료)
+
+```json
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch==2026.10.28"]
+    }
+  }
+}
+```
+
+`uvx` 없으면: `pip install mcp-server-fetch==2026.10.28` 후 `"command": "python", "args": ["-m", "mcp_server_fetch"]`
+
+## arXiv MCP (선택)
+
+- 저장소: https://github.com/blazickjp/arxiv-mcp-server (공개, Apache-2.0)
+- 논문 검색·읽기 (wafer map defect, SPC 등). 도구 19개라 토큰 많이 듦 → 논문 수준으로 파야 할 때만 붙이기.
+- 기준 커밋: `572e301bb3198962c025d5ed5e14becb86868daa` / PyPI `arxiv-mcp-server==0.8.2` (Python 3.11+, 로컬 테스트 완료)
+
+```json
+{
+  "mcpServers": {
+    "arxiv": {
+      "command": "uvx",
+      "args": ["arxiv-mcp-server==0.8.2"]
+    }
+  }
+}
+```
+
+## define-goal / jupyter-notebook (OpenAI 공식 skills)
+
+- 저장소: https://github.com/openai/skills (공개, 각 스킬 폴더에 Apache-2.0 LICENSE.txt)
+- `define-goal`: 모호한 요청을 측정 가능한 목표·범위·검증 방법·종료 조건으로 정리. 계획 문서 맨 위에 사용. (`/goal`과 연동, 0.139에서 동작 여부 미확인)
+- `jupyter-notebook`: 수율·센서·결함 CSV 탐색 분석용 노트북을 템플릿 스크립트로 생성 (토큰 절약).
+- 기준 커밋: `49f948faa9258a0c61caceaf225e179651397431` (playwright 스킬과 같은 clone 재사용)
+
+설치 (1순위): Codex에서 `$skill-installer define-goal`, `$skill-installer jupyter-notebook`
+
+설치 (수동):
+
+```bash
+[ -d ~/.codex/openai-skills ] || git clone https://github.com/openai/skills.git ~/.codex/openai-skills
+git -C ~/.codex/openai-skills checkout 49f948faa9258a0c61caceaf225e179651397431
+mkdir -p ~/.agents/skills
+for s in define-goal jupyter-notebook; do ln -s ~/.codex/openai-skills/skills/.curated/$s ~/.agents/skills/$s; done
+```
