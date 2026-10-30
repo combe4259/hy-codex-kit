@@ -90,27 +90,32 @@ codex mcp add playwright -- npx -y @playwright/mcp@0.0.83 --headless --isolated 
 
 사용: `서버 0.0.0.0:3000 띄우고 playwright로 http://localhost:3000 들어가서 추가 버튼 동작 확인해줘`
 
-## Playwright Skill (OpenAI 공식, webapp-testing 대체)
+## OpenAI 공식 skills (playwright / define-goal / jupyter-notebook)
 
-- 저장소: https://github.com/openai/skills (공개, OpenAI 공식 Codex Skill 카탈로그)
-- `skills/.curated/playwright`: 터미널에서 `playwright-cli`로 브라우저 자동화 (이동·폼 입력·스크린샷·UI 흐름 디버깅). MCP 대신 CLI 방식이라 가벼움.
+- 저장소: https://github.com/openai/skills (공개, 각 스킬 폴더에 Apache-2.0 LICENSE.txt)
+- `playwright` (webapp-testing 대체): 터미널에서 `playwright-cli`로 브라우저 자동화 (이동·폼 입력·스크린샷·UI 흐름 디버깅). MCP보다 가벼움.
+- `define-goal`: 모호한 요청을 측정 가능한 목표·범위·검증 방법·종료 조건으로 정리. 계획 문서 맨 위에 사용. (`/goal` 연동, 0.139에서 동작 여부 미확인)
+- `jupyter-notebook`: 수율·센서·결함 CSV 탐색 분석용 노트북을 템플릿 스크립트로 생성 (토큰 절약).
 - 기준 커밋: `49f948faa9258a0c61caceaf225e179651397431`
 
-설치 (1순위): Codex에서 `$skill-installer playwright`
+설치 (1순위): Codex에서 `$skill-installer playwright`, `$skill-installer define-goal`, `$skill-installer jupyter-notebook`
 
 설치 (수동):
 
 ```bash
 git clone https://github.com/openai/skills.git ~/.codex/openai-skills
 git -C ~/.codex/openai-skills checkout 49f948faa9258a0c61caceaf225e179651397431
-mkdir -p ~/.agents/skills && ln -s ~/.codex/openai-skills/skills/.curated/playwright ~/.agents/skills/playwright
+mkdir -p ~/.agents/skills
+for s in playwright define-goal jupyter-notebook; do ln -s ~/.codex/openai-skills/skills/.curated/$s ~/.agents/skills/$s; done
 ```
 
-## grill-me / handoff (Matt Pocock skills)
+## Matt Pocock skills (grill-me / grilling / handoff / to-questionnaire / domain-modeling)
 
 - 저장소: https://github.com/mattpocock/skills (공개, MIT, Codex용 `agents/openai.yaml` 포함)
-- `grill-me`: 계획·설계를 AI가 집요하게 질문해서 빈틈을 찾아줌. 구현 전 요구사항 정리용. 내부적으로 `grilling` 스킬을 호출하므로 둘 다 설치.
-- `handoff`: 현재 대화를 다음 세션/에이전트가 이어받을 수 있는 인수인계 문서로 압축 (컨텍스트 꽉 찼을 때).
+- `grill-me` (+ 내부에서 호출하는 `grilling`): 계획·설계를 AI가 집요하게 질문해서 빈틈을 찾아줌. 구현 전 요구사항 정리용.
+- `to-questionnaire`: 내가 모르는 것을 실무자에게 물어볼 질문 목록으로 순서대로 정리. 메신저 대화 전에 사용.
+- `domain-modeling`: 대화하며 확정된 용어를 `GLOSSARY.md`로 축적. 낯선 도메인(반도체) 용어 정리 + 후속 서술형 대비.
+- `handoff`: 현재 대화를 다음 세션/에이전트가 이어받을 인수인계 문서로 압축 (컨텍스트 꽉 찼을 때).
 - 기준 커밋: `a496f5513d4a4cf889bc48e189e579f4b0bdf6aa`
 
 설치:
@@ -119,27 +124,10 @@ mkdir -p ~/.agents/skills && ln -s ~/.codex/openai-skills/skills/.curated/playwr
 git clone https://github.com/mattpocock/skills.git ~/.codex/mattpocock-skills
 git -C ~/.codex/mattpocock-skills checkout a496f5513d4a4cf889bc48e189e579f4b0bdf6aa
 mkdir -p ~/.agents/skills
-for s in grill-me grilling handoff; do ln -s ~/.codex/mattpocock-skills/skills/productivity/$s ~/.agents/skills/$s; done
+for s in productivity/grill-me productivity/grilling productivity/handoff productivity/to-questionnaire engineering/domain-modeling; do ln -s ~/.codex/mattpocock-skills/skills/$s ~/.agents/skills/$(basename $s); done
 ```
 
-사용: `$grill-me` / `$handoff 다음 세션은 테스트 작성용`
-
-## to-questionnaire / domain-modeling (Matt Pocock skills)
-
-- 저장소: https://github.com/mattpocock/skills (공개, MIT, Codex용 `agents/openai.yaml` 포함)
-- `to-questionnaire`: 내가 모르는 것을 실무자에게 물어볼 질문 목록으로 순서대로 정리. 메신저 대화 전에 사용.
-- `domain-modeling`: 대화하며 확정된 용어를 `GLOSSARY.md`로 축적. 낯선 도메인(반도체) 용어 정리 + 후속 서술형 대비.
-- 기준 커밋: `a496f5513d4a4cf889bc48e189e579f4b0bdf6aa` (grill-me와 같은 clone 재사용)
-
-설치:
-
-```bash
-[ -d ~/.codex/mattpocock-skills ] || git clone https://github.com/mattpocock/skills.git ~/.codex/mattpocock-skills
-git -C ~/.codex/mattpocock-skills checkout a496f5513d4a4cf889bc48e189e579f4b0bdf6aa
-mkdir -p ~/.agents/skills
-ln -s ~/.codex/mattpocock-skills/skills/productivity/to-questionnaire ~/.agents/skills/to-questionnaire
-ln -s ~/.codex/mattpocock-skills/skills/engineering/domain-modeling ~/.agents/skills/domain-modeling
-```
+사용: `$to-questionnaire` / `$domain-modeling` / `$grill-me` / `$handoff 다음 세션은 테스트 작성용`
 
 ## Codex 내장 웹 검색 (설치 없음)
 
@@ -182,22 +170,4 @@ ln -s ~/.codex/mattpocock-skills/skills/engineering/domain-modeling ~/.agents/sk
     }
   }
 }
-```
-
-## define-goal / jupyter-notebook (OpenAI 공식 skills)
-
-- 저장소: https://github.com/openai/skills (공개, 각 스킬 폴더에 Apache-2.0 LICENSE.txt)
-- `define-goal`: 모호한 요청을 측정 가능한 목표·범위·검증 방법·종료 조건으로 정리. 계획 문서 맨 위에 사용. (`/goal`과 연동, 0.139에서 동작 여부 미확인)
-- `jupyter-notebook`: 수율·센서·결함 CSV 탐색 분석용 노트북을 템플릿 스크립트로 생성 (토큰 절약).
-- 기준 커밋: `49f948faa9258a0c61caceaf225e179651397431` (playwright 스킬과 같은 clone 재사용)
-
-설치 (1순위): Codex에서 `$skill-installer define-goal`, `$skill-installer jupyter-notebook`
-
-설치 (수동):
-
-```bash
-[ -d ~/.codex/openai-skills ] || git clone https://github.com/openai/skills.git ~/.codex/openai-skills
-git -C ~/.codex/openai-skills checkout 49f948faa9258a0c61caceaf225e179651397431
-mkdir -p ~/.agents/skills
-for s in define-goal jupyter-notebook; do ln -s ~/.codex/openai-skills/skills/.curated/$s ~/.agents/skills/$s; done
 ```
