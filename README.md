@@ -53,6 +53,55 @@ Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저
 | 웹 검색 | `○○ 검색해서 알려줘` (꺼져 있으면 `codex --search`) |
 
 
+## 반도체 과제용 라이브러리·자료
+
+### 라이브러리 (모두 공개·유지 중, 2026-10-30 확인)
+| 용도 | 이름 | 레포 | 라이선스 | 한 줄 사용 |
+|---|---|---|---|---|
+| 통계 검정·회귀 (SPC 보조) | statsmodels | https://github.com/statsmodels/statsmodels | BSD-3 | `statsmodels.stats.diagnostic.normal_ad(x)` |
+| 기본 ML·이상 탐지 | scikit-learn | https://github.com/scikit-learn/scikit-learn | BSD-3 | `IsolationForest(contamination=0.01).fit(X)` |
+| 센서 이상 탐지 (FDC) | PyOD | https://github.com/yzhao062/pyod | BSD-2 | `ECOD().fit(X).decision_scores_` (튜닝 불필요) |
+| 시계열 이상 구간 | STUMPY | https://github.com/stumpy-dev/stumpy | BSD-3 | `stumpy.stump(ts, m=50)` → 최댓값 위치가 이상 구간 |
+| 수율·불량 예측 | LightGBM | https://github.com/lightgbm-org/LightGBM | MIT | `LGBMClassifier(class_weight="balanced")` |
+| 원인 변수 설명 | SHAP | https://github.com/shap/shap | MIT | `shap.TreeExplainer(model).shap_values(X)` |
+| 드문 불량 (불균형) | imbalanced-learn | https://github.com/scikit-learn-contrib/imbalanced-learn | MIT | `SMOTE`, `BalancedRandomForestClassifier`. 지표는 PR-AUC·재현율 |
+| 웨이퍼맵 이미지 특징 | scikit-image | https://github.com/scikit-image/scikit-image | BSD-3 | `transform.radon`, `measure.regionprops` |
+| 장비 스케줄링 | OR-Tools | https://github.com/google/or-tools | Apache-2.0 | CP-SAT `NewIntervalVar` + `AddNoOverlap` |
+| 팹 흐름 시뮬레이션 | SimPy | https://gitlab.com/team-simpy/simpy | MIT | `simpy.Resource(env, capacity=k)`로 장비군 모델링 |
+| 대시보드 | Streamlit | https://github.com/streamlit/streamlit | Apache-2.0 | `streamlit run app.py --server.address 0.0.0.0` |
+| 차트 | Plotly | https://github.com/plotly/plotly.py | MIT | `st.plotly_chart(fig)` |
+| API 서버 | FastAPI | https://github.com/fastapi/fastapi | MIT | `uvicorn main:app --host 0.0.0.0 --port 3000` |
+| 테스트 | pytest | https://github.com/pytest-dev/pytest | MIT | FastAPI는 `TestClient`로 테스트 |
+
+설치:
+
+```bash
+pip install pandas numpy scikit-learn lightgbm shap pyod plotly streamlit fastapi uvicorn pytest
+```
+
+과제 유형별 추가: 스케줄링 `pip install ortools simpy` / 웨이퍼맵 `pip install scikit-image` / 시계열 `pip install stumpy statsmodels` / 불균형 `pip install imbalanced-learn`
+
+### 공식 예제
+- OR-Tools job-shop: https://github.com/google/or-tools/blob/stable/examples/python/jobshop_ft06_sat.py
+- OR-Tools 설비 정비 포함 job-shop: https://github.com/google/or-tools/blob/stable/examples/python/jobshop_with_maintenance_sat.py
+
+### 개념 자료 (fetch / 웹 검색으로 읽기)
+| 주제 | URL |
+|---|---|
+| SPC·관리도 (공식 핸드북) | https://www.itl.nist.gov/div898/handbook/pmc/pmc.htm |
+| 관리도 상세 | https://www.itl.nist.gov/div898/handbook/pmc/section3/pmc3.htm |
+| 공정능력 Cp/Cpk | https://www.itl.nist.gov/div898/handbook/pmc/section1/pmc16.htm |
+| 반도체 공정 흐름 | https://en.wikipedia.org/wiki/Semiconductor_device_fabrication |
+| 웨이퍼 테스트·bin map | https://en.wikipedia.org/wiki/Wafer_testing |
+| 다이 | https://en.wikipedia.org/wiki/Die_(integrated_circuit) |
+| 수율 | https://en.wikipedia.org/wiki/Yield_(engineering) |
+| SPC 개요 | https://en.wikipedia.org/wiki/Statistical_process_control |
+| 이상 판정 규칙 | https://en.wikipedia.org/wiki/Western_Electric_rules |
+| 공정능력지수 | https://en.wikipedia.org/wiki/Process_capability_index |
+| APC | https://en.wikipedia.org/wiki/Advanced_process_control |
+| 가상계측 (VM) | https://en.wikipedia.org/wiki/Virtual_metrology |
+| 고장 탐지 (FDC) | https://en.wikipedia.org/wiki/Fault_detection_and_isolation |
+
 ## 하네스 (이 레포, `templates/`)
 
 - `AGENTS.md`: 60줄 안팎의 지도. 명령어·작업 순서·완료 기준·docs 포인터·제약·커밋·토큰 절약·설명 규칙. 명령어 칸은 과제에 맞게 채운다. 수정하면 Codex 재시작해야 반영됨.
