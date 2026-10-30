@@ -1,15 +1,8 @@
 # ~/.codex/config.toml 에 추가할 조각
-# 응시 환경의 관리 설정이 막아둔 항목은 바꾸지 말 것 (제한 우회 금지)
+# - 응시 환경의 관리 설정이 막아둔 항목은 바꾸지 말 것 (제한 우회 금지)
+# - `# probe-managed-mcp:start/end` 블록은 플랫폼 관리 영역이므로 건드리지 말 것
+# - MCP는 여기 적지 말고 MCP 탭에서만 등록할 것 (같은 이름이 두 번 들어가면 Codex가 안 켜짐)
+# - 아래 키가 이미 있으면 추가하지 말 것: grep -n "web_search" ~/.codex/config.toml
 
 # 내장 웹 검색 (disabled | cached | live)
 web_search = "live"
-
-# fetch MCP: URL 하나를 마크다운으로 읽어옴
-[mcp_servers.fetch]
-command = "uvx"
-args = ["mcp-server-fetch==2026.10.28"]
-
-# 논문 검색이 필요할 때만 주석 해제 (도구 19개라 토큰 많이 씀)
-# [mcp_servers.arxiv]
-# command = "uvx"
-# args = ["arxiv-mcp-server==0.8.2"]

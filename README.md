@@ -6,7 +6,11 @@ Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저
 ## 하네스·문서 템플릿 (이 레포)
 
 - `templates/AGENTS.md`: Codex 작업 규칙 (계획 → 테스트 → 구현 → 검증 → 커밋, 결정 기록, 0.0.0.0 바인딩, 토큰 절약)
-- `templates/config.toml`: `~/.codex/config.toml`에 붙일 조각 (웹 검색, fetch MCP). 관리 설정으로 막힌 항목은 바꾸지 않음.
+- `templates/config.toml`: `~/.codex/config.toml`에 붙일 조각 (웹 검색 한 줄). 관리 설정으로 막힌 항목은 바꾸지 않음.
+
+**MCP 규칙**: MCP는 MCP 탭에서만 등록한다. `config.toml` 직접 수정이나 Codex에게 MCP 등록을 시키지 않는다 (탭이 쓰는 `probe-managed-mcp` 블록과 이름이 겹치면 `duplicate key`로 Codex가 안 켜짐). 등록 전 Codex에서 `/mcp`로 이미 붙어 있는지 확인.
+
+Codex가 안 켜지면: `python3 -c "import tomllib,os;tomllib.load(open(os.path.expanduser('~/.codex/config.toml'),'rb'));print('OK')"` 로 문제 줄 확인 → `probe-managed-mcp` 블록 밖의 중복만 삭제.
 - `templates/docs/`: 제출 문서 뼈대 `PLAN.md` (문제·요구사항·성공 기준) / `DECISIONS.md` (결정·대안·근거) / `VERIFICATION.md` (검증 결과·남은 한계)
 
 과제 작업 폴더에서:
@@ -64,12 +68,6 @@ mkdir -p ~/.agents/skills && ln -s ~/.codex/superpowers/skills ~/.agents/skills/
     }
   }
 }
-```
-
-Codex CLI 직접 설정 (`~/.codex/config.toml`):
-
-```bash
-codex mcp add context7 -- npx -y @upstash/context7-mcp@4.4.4
 ```
 
 사용: `use context7 로 FastAPI 라우터 예시 찾아줘` / AGENTS.md에 `When you need to search docs, use Context7.`
