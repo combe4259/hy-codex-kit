@@ -16,6 +16,16 @@
 3. 기능마다 테스트를 먼저 쓰고, 통과하는 최소 코드를 작성한다.
 4. 기능이 끝나면 `docs/playbook/checkpoint.md` 절차를 따른다.
 
+## 단계별 도구
+설치된 스킬은 단계에 맞을 때 사용한다. 없는 스킬은 건너뛰고 같은 목적을 직접 수행한다.
+- 실무자 대화 전: `to-questionnaire` → 대화 후 `docs/playbook/interview.md`
+- 도메인 개념: `docs/playbook/research.md` (웹 검색 / fetch) → 용어 정돈 `domain-modeling`
+- 목표 정의: `define-goal` → 설계 빈틈 점검 `grill-me` (요구사항이 모호할 때만)
+- 계획: `writing-plans` 또는 `/plan` → `docs/PROGRESS.md` 기능 목록
+- 구현: `test-driven-development`, 데이터 분석이면 `jupyter-notebook`, 막히면 `systematic-debugging`
+- 기능 완료: `docs/playbook/checkpoint.md` / 제출 전: `docs/playbook/wrapup.md`
+- 대화가 길어지면 `handoff`
+
 ## 완료 기준
 - 테스트와 스모크 확인을 이번 변경 이후 실제로 실행했고, 출력에서 통과를 확인했다.
 - 명령 출력 없이 "완료", "동작함"이라고 말하지 않는다.
@@ -27,7 +37,7 @@
 - `docs/DECISIONS.md`: 설계·기술 선택을 할 때마다 한 항목 추가.
 - `docs/VERIFICATION.md`: 검증 결과와 남은 한계.
 - `docs/PROGRESS.md`: 기능 목록과 통과 여부.
-- `docs/playbook/*.md`: 사용자가 이름으로 요청할 때만 읽고 그 절차를 따른다.
+- `docs/playbook/*.md`: 위 "단계별 도구"의 해당 단계에 도달했거나 사용자가 요청할 때 읽고 그 절차를 따른다.
 
 ## 제약
 - 웹 서버는 `0.0.0.0`에 바인딩하고 실행 포트를 출력한다.
