@@ -5,14 +5,24 @@ Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저
 ## 한눈에 보기
 
 ### 단계별 흐름
+스킬 = 생각하는 도구, playbook = 기록·커밋 절차. 단계마다 둘을 이어서 쓴다.
+
 | 단계 | 호출 | 용도 |
 |---|---|---|
-| 실무자 대화 전 | `docs/playbook/interview.md 절차대로 해` | 질문 목록 정리, 대화 후 PLAN 반영 |
-| 개념 조사 | `docs/playbook/research.md 절차대로 ○○ 조사해` | 도메인 개념 → GLOSSARY |
-| 계획 | `/plan` | 구현 전 계획 수립 |
-| 기능 완료마다 | `docs/playbook/checkpoint.md 절차대로 해` | 테스트 → 문서 갱신 → 커밋 → 3줄 보고 |
-| 리뷰 | `/review` | 현재 변경의 버그 리뷰 |
-| 제출 전 | `docs/playbook/wrapup.md 절차대로 해` | 최종 점검 + 서술형 대비 요약 |
+| 1. 실무자 대화 전 | `$to-questionnaire` | 모르는 것을 실무자에게 물을 질문으로 정리 |
+| 2. 실무자 대화 후 | `docs/playbook/interview.md 절차대로 대화 내용 반영해` | 요구사항 → PLAN, 용어 → GLOSSARY |
+| 3. 개념 조사 | `docs/playbook/research.md 절차대로 ○○ 조사해` (웹 검색 / fetch) | 반도체 개념 → GLOSSARY |
+| 4. 용어 정리 | `$domain-modeling` | 대화·조사에서 확정된 용어를 GLOSSARY로 정돈 |
+| 5. 목표 정의 | `$define-goal` | 측정 가능한 목표·성공 기준·검증 방법 → PLAN |
+| 6. 설계 검증 | `$grill-me` | 계획의 빈틈을 질문으로 찾기 (구현 전에) |
+| 7. 계획 | `/plan` 또는 `$writing-plans` | 작업 순서 확정 → PROGRESS 기능 목록 |
+| 8. 구현 | `$test-driven-development` | 기능 하나씩 테스트 먼저 |
+| 8-1. 데이터 분석이면 | `$jupyter-notebook` | CSV 탐색 분석 노트북 |
+| 8-2. 막히면 | `$systematic-debugging` | 추측 말고 원인부터 찾기 |
+| 9. 기능 완료마다 | `docs/playbook/checkpoint.md 절차대로 해` | 테스트 → PROGRESS·VERIFICATION 갱신 → 커밋 → 3줄 보고 |
+| 10. 리뷰 | `/review` | 현재 변경의 버그 리뷰 |
+| 11. 제출 전 | `docs/playbook/wrapup.md 절차대로 해` | 최종 점검 + 서술형 대비 요약 |
+| 언제든 | `/compact` / `$handoff` | 대화가 길어지면 압축 / 새 세션으로 인수인계 |
 
 ### Skills
 | 이름 | 호출 | 용도 |
@@ -63,7 +73,6 @@ git clone https://github.com/combe4259/hy-codex-kit.git ~/kit
 cp ~/kit/templates/AGENTS.md . && cp -r ~/kit/templates/docs .
 ```
 
-사용 흐름: 실무자 대화 전 `docs/playbook/interview.md 절차대로 해` → 개념 조사 `research.md` → `/plan` → 기능마다 `checkpoint.md` → `/review` → 제출 전 `wrapup.md`
 
 **MCP 규칙**: MCP는 MCP 탭에서만 등록한다. `config.toml` 직접 수정이나 Codex에게 MCP 등록을 시키지 않는다 (탭이 쓰는 `probe-managed-mcp` 블록과 이름이 겹치면 `duplicate key`로 Codex가 안 켜짐). 등록 전 Codex에서 `/mcp`로 이미 붙어 있는지 확인.
 
