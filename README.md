@@ -23,7 +23,7 @@ Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저
 | define-goal | `$define-goal` | 모호한 요청 → 측정 가능한 목표·검증 방법 |
 | jupyter-notebook | `$jupyter-notebook` | CSV 탐색 분석용 노트북 생성 |
 | handoff | `$handoff 다음 세션 용도` | 컨텍스트 가득 찼을 때 인수인계 문서 |
-| superpowers | `$brainstorming` `$test-driven-development` 등 | 개발 방법론 묶음. 매 요청 SKILL.md 재로딩으로 토큰 낭비 → 비추천 |
+| superpowers | `$brainstorming` `$test-driven-development` 등 | 계획 → TDD → 디버깅 → 검증 개발 방법론 묶음 |
 
 ### MCP (MCP 탭에서만 등록)
 | 이름 | 호출 | 용도 |
