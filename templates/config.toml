@@ -1,0 +1,15 @@
+# ~/.codex/config.toml 에 추가할 조각
+# 응시 환경의 관리 설정이 막아둔 항목은 바꾸지 말 것 (제한 우회 금지)
+
+# 내장 웹 검색 (disabled | cached | live)
+web_search = "live"
+
+# fetch MCP: URL 하나를 마크다운으로 읽어옴
+[mcp_servers.fetch]
+command = "uvx"
+args = ["mcp-server-fetch==2026.10.28"]
+
+# 논문 검색이 필요할 때만 주석 해제 (도구 19개라 토큰 많이 씀)
+# [mcp_servers.arxiv]
+# command = "uvx"
+# args = ["arxiv-mcp-server==0.8.2"]

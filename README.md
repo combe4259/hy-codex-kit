@@ -2,6 +2,20 @@
 
 Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저장소에서 직접 받는다.
 
+
+## 하네스·문서 템플릿 (이 레포)
+
+- `templates/AGENTS.md`: Codex 작업 규칙 (계획 → 테스트 → 구현 → 검증 → 커밋, 결정 기록, 0.0.0.0 바인딩, 토큰 절약)
+- `templates/config.toml`: `~/.codex/config.toml`에 붙일 조각 (웹 검색, fetch MCP). 관리 설정으로 막힌 항목은 바꾸지 않음.
+- `templates/docs/`: 제출 문서 뼈대 `PLAN.md` (문제·요구사항·성공 기준) / `DECISIONS.md` (결정·대안·근거) / `VERIFICATION.md` (검증 결과·남은 한계)
+
+과제 작업 폴더에서:
+
+```bash
+git clone https://github.com/combe4259/hy-codex-kit.git ~/kit
+cp ~/kit/templates/AGENTS.md . && mkdir -p docs && cp ~/kit/templates/docs/*.md docs/
+```
+
 ## Superpowers
 
 - 저장소: https://github.com/obra/superpowers (공개, MIT)
