@@ -60,45 +60,14 @@ codex mcp add context7 -- npx -y @upstash/context7-mcp@4.4.4
 
 사용: `use context7 로 FastAPI 라우터 예시 찾아줘` / AGENTS.md에 `When you need to search docs, use Context7.`
 
-## Playwright MCP
-
-- 저장소: https://github.com/microsoft/playwright-mcp (공개, Apache-2.0)
-- Codex가 브라우저를 직접 조작(이동·클릭·입력·스냅샷·스크린샷)해서 내가 만든 웹 서비스를 E2E로 확인하는 MCP. 용도는 본인 서버 테스트로만 (외부 사이트 탐색 X).
-- 응시 환경은 화면 없는 리눅스라 `--headless` 필수, 메모리 아끼려고 `--isolated`.
-- 기준 커밋: `0c4107acbecb75472b23c05c0e42471a0011874f` / npm `@playwright/mcp@0.0.83`
-
-설치 (MCP 탭 JSON):
-
-```json
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@0.0.83", "--headless", "--isolated", "--browser", "chromium", "--no-sandbox"]
-    }
-  }
-}
-```
-
-브라우저 없다고 나오면: `npx -y playwright@1.64.0-alpha-1790635538000 install chromium` (안 되면 `npx playwright install chromium`)
-
-Codex CLI 직접 설정:
-
-```bash
-codex mcp add playwright -- npx -y @playwright/mcp@0.0.83 --headless --isolated --browser chromium --no-sandbox
-```
-
-사용: `서버 0.0.0.0:3000 띄우고 playwright로 http://localhost:3000 들어가서 추가 버튼 동작 확인해줘`
-
-## OpenAI 공식 skills (playwright / define-goal / jupyter-notebook)
+## OpenAI 공식 skills (define-goal / jupyter-notebook)
 
 - 저장소: https://github.com/openai/skills (공개, 각 스킬 폴더에 Apache-2.0 LICENSE.txt)
-- `playwright` (webapp-testing 대체): 터미널에서 `playwright-cli`로 브라우저 자동화 (이동·폼 입력·스크린샷·UI 흐름 디버깅). MCP보다 가벼움.
 - `define-goal`: 모호한 요청을 측정 가능한 목표·범위·검증 방법·종료 조건으로 정리. 계획 문서 맨 위에 사용. (`/goal` 연동, 0.139에서 동작 여부 미확인)
 - `jupyter-notebook`: 수율·센서·결함 CSV 탐색 분석용 노트북을 템플릿 스크립트로 생성 (토큰 절약).
 - 기준 커밋: `49f948faa9258a0c61caceaf225e179651397431`
 
-설치 (1순위): Codex에서 `$skill-installer playwright`, `$skill-installer define-goal`, `$skill-installer jupyter-notebook`
+설치 (1순위): Codex에서 `$skill-installer define-goal`, `$skill-installer jupyter-notebook`
 
 설치 (수동):
 
@@ -106,7 +75,7 @@ codex mcp add playwright -- npx -y @playwright/mcp@0.0.83 --headless --isolated 
 git clone https://github.com/openai/skills.git ~/.codex/openai-skills
 git -C ~/.codex/openai-skills checkout 49f948faa9258a0c61caceaf225e179651397431
 mkdir -p ~/.agents/skills
-for s in playwright define-goal jupyter-notebook; do ln -s ~/.codex/openai-skills/skills/.curated/$s ~/.agents/skills/$s; done
+for s in define-goal jupyter-notebook; do ln -s ~/.codex/openai-skills/skills/.curated/$s ~/.agents/skills/$s; done
 ```
 
 ## Matt Pocock skills (grill-me / grilling / handoff / to-questionnaire / domain-modeling)
