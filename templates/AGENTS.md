@@ -39,7 +39,7 @@
 - `docs/DECISIONS.md`: 설계·기술 선택마다 한 항목. 근거 코드는 `파일:라인`으로 적는다.
 - `docs/VERIFICATION.md`: 검증 결과와 남은 한계.
 - `docs/PROGRESS.md`: 기능 목록과 통과 여부.
-- `README.md`: 처음 보는 사람이 README만 읽고 빌드·실행·테스트할 수 있어야 한다.
+- 결과물 README: `docs/README_TEMPLATE.md` 형식으로 작성. 처음 보는 사람이 README만 읽고 빌드·실행·테스트할 수 있어야 한다. 과제 안내 문서는 덮어쓰지 않는다 (필요하면 별도 파일로).
 - `docs/playbook/*.md`: 위 "단계별 도구"의 해당 단계에 도달했거나 사용자가 요청할 때 읽고 따른다.
 
 ## 제약

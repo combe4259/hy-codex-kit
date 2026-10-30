@@ -105,10 +105,10 @@ pip install pandas numpy scikit-learn lightgbm shap pyod plotly streamlit fastap
 ## 하네스 (이 레포, `templates/`)
 
 - `AGENTS.md`: 60줄 안팎의 지도. 명령어·작업 순서·완료 기준·docs 포인터·제약·커밋·토큰 절약·설명 규칙. 명령어 칸은 과제에 맞게 채운다. 수정하면 Codex 재시작해야 반영됨.
-- `PROJECT_README.md`: 과제 프로젝트용 README 뼈대 (한 명령 실행, 테스트, 헬스체크, 환경·가정, 기능 요약). 과제 폴더에 `README.md`로 복사. 과제 폴더에 이미 README가 있으면 덮어쓰지 말고 내용만 합칠 것.
 - `docs/`: 제출 문서 뼈대
   - `PLAN.md` 문제·요구사항·위험 시나리오·가정·성공 기준 / `DECISIONS.md` 결정·대안·충분한 이유·깨지는 조건·근거 코드 / `VERIFICATION.md` 검증(반복 횟수)·남은 한계
   - `GLOSSARY.md` 도메인 용어 / `PROGRESS.md` 기능 목록·통과 여부
+  - `README_TEMPLATE.md` 결과물 README 뼈대 (한 명령 실행·테스트·헬스체크·환경과 가정·기능 요약). 과제 안내 README는 덮어쓰지 않는다.
 - `docs/playbook/`: 부를 때만 읽는 절차 문서 (스킬 아님, 평소엔 컨텍스트에 안 올라감)
   - `interview.md` 실무자 대화 전 질문 정리 · 대화 후 PLAN 반영
   - `research.md` 도메인 개념 조사 → GLOSSARY
@@ -120,7 +120,7 @@ pip install pandas numpy scikit-learn lightgbm shap pyod plotly streamlit fastap
 
 ```bash
 git clone https://github.com/combe4259/hy-codex-kit.git ~/kit
-cp ~/kit/templates/AGENTS.md . && cp -r ~/kit/templates/docs . && cp ~/kit/templates/PROJECT_README.md README.md
+cp ~/kit/templates/AGENTS.md . && cp -r ~/kit/templates/docs .
 ```
 
 
