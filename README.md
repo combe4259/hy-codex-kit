@@ -3,22 +3,31 @@
 Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저장소에서 직접 받는다.
 
 
-## 하네스·문서 템플릿 (이 레포)
+## 하네스 (이 레포, `templates/`)
 
-- `templates/AGENTS.md`: Codex 작업 규칙 (계획 → 테스트 → 구현 → 검증 → 커밋, 결정 기록, 0.0.0.0 바인딩, 토큰 절약)
-- `templates/config.toml`: `~/.codex/config.toml`에 붙일 조각 (웹 검색 한 줄). 관리 설정으로 막힌 항목은 바꾸지 않음.
-
-**MCP 규칙**: MCP는 MCP 탭에서만 등록한다. `config.toml` 직접 수정이나 Codex에게 MCP 등록을 시키지 않는다 (탭이 쓰는 `probe-managed-mcp` 블록과 이름이 겹치면 `duplicate key`로 Codex가 안 켜짐). 등록 전 Codex에서 `/mcp`로 이미 붙어 있는지 확인.
-
-Codex가 안 켜지면: `python3 -c "import tomllib,os;tomllib.load(open(os.path.expanduser('~/.codex/config.toml'),'rb'));print('OK')"` 로 문제 줄 확인 → `probe-managed-mcp` 블록 밖의 중복만 삭제.
-- `templates/docs/`: 제출 문서 뼈대 `PLAN.md` (문제·요구사항·성공 기준) / `DECISIONS.md` (결정·대안·근거) / `VERIFICATION.md` (검증 결과·남은 한계)
+- `AGENTS.md`: 60줄 안팎의 지도. 명령어·작업 순서·완료 기준·docs 포인터·제약·커밋·토큰 절약·설명 규칙. 명령어 칸은 과제에 맞게 채운다. 수정하면 Codex 재시작해야 반영됨.
+- `docs/`: 제출 문서 뼈대
+  - `PLAN.md` 문제·요구사항·성공 기준 / `DECISIONS.md` 결정·대안·근거 / `VERIFICATION.md` 검증 결과·남은 한계
+  - `GLOSSARY.md` 도메인 용어 / `PROGRESS.md` 기능 목록·통과 여부
+- `docs/playbook/`: 부를 때만 읽는 절차 문서 (스킬 아님, 평소엔 컨텍스트에 안 올라감)
+  - `interview.md` 실무자 대화 전 질문 정리 · 대화 후 PLAN 반영
+  - `research.md` 도메인 개념 조사 → GLOSSARY
+  - `checkpoint.md` 기능 하나 끝날 때: 테스트 → PROGRESS·VERIFICATION 갱신 → 커밋 → 3줄 보고
+  - `wrapup.md` 제출 전 점검 + 후속 서술형 대비 요약
+- `config.toml`: `~/.codex/config.toml`에 붙일 조각 (웹 검색 한 줄). 이미 있거나 관리 설정으로 막혀 있으면 추가하지 않음.
 
 과제 작업 폴더에서:
 
 ```bash
 git clone https://github.com/combe4259/hy-codex-kit.git ~/kit
-cp ~/kit/templates/AGENTS.md . && mkdir -p docs && cp ~/kit/templates/docs/*.md docs/
+cp ~/kit/templates/AGENTS.md . && cp -r ~/kit/templates/docs .
 ```
+
+사용 흐름: 실무자 대화 전 `docs/playbook/interview.md 절차대로 해` → 개념 조사 `research.md` → `/plan` → 기능마다 `checkpoint.md` → `/review` → 제출 전 `wrapup.md`
+
+**MCP 규칙**: MCP는 MCP 탭에서만 등록한다. `config.toml` 직접 수정이나 Codex에게 MCP 등록을 시키지 않는다 (탭이 쓰는 `probe-managed-mcp` 블록과 이름이 겹치면 `duplicate key`로 Codex가 안 켜짐). 등록 전 Codex에서 `/mcp`로 이미 붙어 있는지 확인.
+
+Codex가 안 켜지면: `python3 -c "import tomllib,os;tomllib.load(open(os.path.expanduser('~/.codex/config.toml'),'rb'));print('OK')"` 로 문제 줄 확인 → `probe-managed-mcp` 블록 밖의 중복만 삭제.
 
 ## Superpowers
 
