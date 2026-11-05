@@ -24,7 +24,7 @@
 - 도메인 개념: `docs/playbook/research.md` (웹 검색 / fetch) → 용어 정돈 `domain-modeling`
 - 목표 정의: `define-goal` → 설계 빈틈 점검 `grill-me` (요구사항이 모호할 때만)
 - 계획: `writing-plans` 또는 `/plan` → `docs/PROGRESS.md` 기능 목록
-- 구현: `test-driven-development`, 데이터 분석이면 `jupyter-notebook`, 막히면 `systematic-debugging`
+- 구현: `test-driven-development`, 데이터 분석이면 `jupyter-notebook`, 웹 화면 동작 확인은 `playwright`, 막히면 `systematic-debugging`
 - 기능 완료: `docs/playbook/checkpoint.md` / 제출 전: `docs/playbook/wrapup.md`
 - 대화가 길어지면 `handoff`
 
@@ -53,7 +53,7 @@
 - 문제·파일·결과물을 외부로 전송하지 않는다 (업로드, gist, pastebin, 외부 API로 데이터 전송 등). 외부 접근은 공개 자료·패키지를 받아오는 용도만.
 - 차단·제한을 다른 경로나 설정 변경으로 우회하지 않는다. 플랫폼 관리 설정·감독·연결 프로세스를 수정·종료하지 않는다.
 - 키·토큰·비밀번호를 출력하거나 파일에 쓰지 않는다.
-- 브라우저 자동 조작 도구(헤드리스 브라우저 포함)를 사용하지 않는다. 화면 확인은 사용자가 Browser 미리보기에서 직접 한다.
+- Computer Use(데스크톱·화면 자동 조작)는 사용하지 않는다. 웹 동작 검증은 Playwright(헤드리스)로 본인 서버(`localhost`)만 대상으로 한다.
 - 외부 코드로 결과물을 통째로 대체하지 않는다. 외부 코드는 참고·라이브러리로만 쓰고 출처를 남긴다.
 - 메모리를 과도하게 쓰는 작업(대용량 데이터 전체 로드, 무제한 병렬 실행)은 실행 전에 사용자에게 알린다.
 - 과제 안내 문서(`README.md` 등)는 덮어쓰거나 삭제하지 않는다.

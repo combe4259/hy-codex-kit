@@ -14,7 +14,7 @@ Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저
 | 설정 파일 | `~/.codex/config.toml`의 `probe-managed-mcp` 블록 수정 금지. MCP는 MCP 탭에서만 등록 |
 | API 키 | 개인 API 키·유료 구독 사용 금지. 제공된 Codex만 사용. 키·토큰을 출력·공개하지 않음 |
 | 모델 | Astra 사용 제한. 권장: Sol 6.1, Terra 5.6, Luna 6, Sol 6.0 |
-| 자동 조작 | Computer Use(자동 조작) 전 단계 금지. 브라우저 자동화 도구 사용하지 않음 |
+| 자동 조작 | Computer Use(데스크톱·화면 자동 조작) 전 단계 금지. Playwright로 본인 서버를 헤드리스 테스트하는 건 사용 가능 |
 | 외부 브라우저 | 직접 검색·접속 금지. 정보는 Codex(웹 검색·fetch)를 통해서만 |
 | 결과물 대체 | 외부 자료로 결과물을 통째로 대체 금지. 특히 제출 직전 대량 교체는 작업 이력 검토 대상 |
 | 후속 서술형 | AI 사용 금지(다른 기기 포함), 복사·붙여넣기 불가, 본인이 직접 답변 |
@@ -55,7 +55,8 @@ Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저
 | 7. 계획 | `/plan` 또는 `$writing-plans` | 작업 순서 확정 → PROGRESS 기능 목록 |
 | 8. 구현 | `$test-driven-development` | 기능 하나씩 테스트 먼저 |
 | 8-1. 데이터 분석이면 | `$jupyter-notebook` | CSV 탐색 분석 노트북 |
-| 8-2. 막히면 | `$systematic-debugging` | 추측 말고 원인부터 찾기 |
+| 8-2. 웹 화면 확인 | `$playwright` 또는 Playwright MCP | 본인 서버를 헤드리스 브라우저로 E2E 확인 |
+| 8-3. 막히면 | `$systematic-debugging` | 추측 말고 원인부터 찾기 |
 | 9. 기능 완료마다 | `docs/playbook/checkpoint.md 절차대로 해` | 테스트 → PROGRESS·VERIFICATION 갱신 → 커밋 → 3줄 보고 |
 | 10. 리뷰 | `/review` | 현재 변경의 버그 리뷰 |
 | 11. 제출 전 | `docs/playbook/wrapup.md 절차대로 해` | 최종 점검 + 서술형 대비 요약 |
@@ -69,6 +70,7 @@ Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저
 | domain-modeling | `$domain-modeling` | 확정된 용어를 GLOSSARY로 축적 |
 | define-goal | `$define-goal` | 모호한 요청 → 측정 가능한 목표·검증 방법 |
 | jupyter-notebook | `$jupyter-notebook` | CSV 탐색 분석용 노트북 생성 |
+| playwright | `$playwright` | 터미널에서 `playwright-cli`로 본인 웹 서비스 E2E 확인 (MCP보다 가벼움) |
 | handoff | `$handoff 다음 세션 용도` | 컨텍스트 가득 찼을 때 인수인계 문서 |
 | superpowers | `$brainstorming` `$test-driven-development` 등 | 계획 → TDD → 디버깅 → 검증 개발 방법론 묶음 |
 
@@ -76,6 +78,7 @@ Codex에서 쓸 공개 Skill·Plugin·MCP 인덱스. 내용물은 각 원본 저
 | 이름 | 호출 | 용도 |
 |---|---|---|
 | fetch | `fetch로 <URL> 읽고 요약해줘` | 웹페이지 하나를 마크다운으로 읽기 (도구 1개, 가벼움) |
+| Playwright | `playwright로 http://localhost:3000 열고 추가 버튼 동작 확인해줘` | 본인 서버 E2E 확인 (도구 25개, 무거움 → 필요할 때만) |
 | Context7 | `use context7 로 <라이브러리> 예시 찾아줘` | 라이브러리 최신 공식 문서·예시 |
 | arXiv (선택) | `arxiv에서 <주제> 논문 찾아줘` | 논문 검색 (도구 19개, 무거움) |
 
@@ -217,14 +220,39 @@ mkdir -p ~/.agents/skills && ln -s ~/.codex/superpowers/skills ~/.agents/skills/
 
 사용: `use context7 로 FastAPI 라우터 예시 찾아줘` / AGENTS.md에 `When you need to search docs, use Context7.`
 
-## OpenAI 공식 skills (define-goal / jupyter-notebook)
+## Playwright MCP
+
+- 저장소: https://github.com/microsoft/playwright-mcp (공개, Apache-2.0)
+- Codex가 헤드리스 브라우저로 내가 만든 웹 서비스를 E2E 확인(이동·클릭·입력·스냅샷·스크린샷)하는 MCP. 대상은 본인 서버(`localhost`)만, 외부 사이트 탐색 X.
+- 응시 환경은 화면 없는 리눅스라 `--headless` 필수, 메모리 아끼려고 `--isolated`. 도구 25개라 토큰이 많이 듦 → 가벼운 확인은 `$playwright` 스킬 우선.
+- 기준 커밋: `0c4107acbecb75472b23c05c0e42471a0011874f` / npm `@playwright/mcp@0.0.83`
+
+설치 (MCP 탭 JSON):
+
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@0.0.83", "--headless", "--isolated", "--browser", "chromium", "--no-sandbox"]
+    }
+  }
+}
+```
+
+브라우저 없다고 나오면: `npx -y playwright@1.64.0-alpha-1790635538000 install chromium` (안 되면 `npx playwright install chromium`)
+
+사용: `서버 0.0.0.0:3000 띄우고 playwright로 http://localhost:3000 들어가서 추가 버튼 동작 확인해줘`
+
+## OpenAI 공식 skills (define-goal / jupyter-notebook / playwright)
 
 - 저장소: https://github.com/openai/skills (공개, 각 스킬 폴더에 Apache-2.0 LICENSE.txt)
 - `define-goal`: 모호한 요청을 측정 가능한 목표·범위·검증 방법·종료 조건으로 정리. 계획 문서 맨 위에 사용. (`/goal` 연동, 0.139에서 동작 여부 미확인)
 - `jupyter-notebook`: 수율·센서·결함 CSV 탐색 분석용 노트북을 템플릿 스크립트로 생성 (토큰 절약).
+- `playwright`: 터미널에서 `playwright-cli`로 브라우저 자동화 (이동·폼 입력·스크린샷·UI 흐름 디버깅). 대상은 본인 서버만. MCP보다 가벼움.
 - 기준 커밋: `49f948faa9258a0c61caceaf225e179651397431`
 
-설치 (1순위): Codex에서 `$skill-installer define-goal`, `$skill-installer jupyter-notebook`
+설치 (1순위): Codex에서 `$skill-installer define-goal`, `$skill-installer jupyter-notebook`, `$skill-installer playwright`
 
 설치 (수동):
 
@@ -232,7 +260,7 @@ mkdir -p ~/.agents/skills && ln -s ~/.codex/superpowers/skills ~/.agents/skills/
 git clone https://github.com/openai/skills.git ~/.codex/openai-skills
 git -C ~/.codex/openai-skills checkout 49f948faa9258a0c61caceaf225e179651397431
 mkdir -p ~/.agents/skills
-for s in define-goal jupyter-notebook; do ln -s ~/.codex/openai-skills/skills/.curated/$s ~/.agents/skills/$s; done
+for s in define-goal jupyter-notebook playwright; do ln -s ~/.codex/openai-skills/skills/.curated/$s ~/.agents/skills/$s; done
 ```
 
 ## Matt Pocock skills (grill-me / grilling / handoff / to-questionnaire / domain-modeling)
